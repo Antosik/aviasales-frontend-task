@@ -1,0 +1,28 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true
+  },
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true,
+      "experimentalObjectRestSpread": true
+    }
+  },
+  "extends": [
+    "plugin:react/recommended",
+    "airbnb",
+    "prettier",
+    "prettier/react"
+  ],
+  "rules": {
+    "import/no-extraneous-dependencies": [0],
+    "react/require-default-props": [0],
+    "semi": [2, "always"],
+    "no-unexpected-multiline": 2,
+    "linebreak-style": [2, "windows"],
+    "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }]
+  },
+  "plugins": ["react", "prettier"]
+}
