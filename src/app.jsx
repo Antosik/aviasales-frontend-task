@@ -16,9 +16,11 @@ const AppContainer = styled.div`
     margin: 0 auto;
     display: flex;
     flex-wrap: wrap;
+    flex-direction: column;
 
     @media (min-width: 1024px) {
       width: calc(100% - 40px);
+      flex-direction: row;
     }
 }`;
 
