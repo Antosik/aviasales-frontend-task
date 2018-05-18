@@ -28,7 +28,6 @@ const BuySide = styled.div`
 const CarrierLogo = styled.img`
   width: 120px;
   height: 35px;
-  background: #f2fcff;
   margin: 10px;
 `;
 const BuyButton = styled.a`
@@ -161,7 +160,7 @@ export default function Ticket(ticket) {
   return (
     <TicketContainer>
       <BuySide>
-        <CarrierLogo alt={ticket.carrier} />
+        <CarrierLogo alt={ticket.carrier} src={`./${ticket.carrier}.png`} />
         <BuyButton href="#">
           Купить за {ticket.price}​ {ticket.currencySign}
         </BuyButton>
