@@ -7,7 +7,7 @@ import Header from "./blocks/Header";
 import Aside from "./blocks/Aside";
 import Main from "./blocks/Main";
 import Currency from "./blocks/Currency";
-import Filters from "./blocks/Filters"; 
+import Filters from "./blocks/Filters";
 import TicketsContainer from "./blocks/TicketsContainer";
 
 const AppContainer = styled.div`
@@ -52,7 +52,7 @@ export default class App extends React.Component {
 
     this.loadTickets().then(tickets => {
       this.tickets = tickets;
-      this.filters = [ ...new Set(tickets.map(ticket => ticket.stops)) ].sort();
+      this.filters = [...new Set(tickets.map(ticket => ticket.stops))].sort();
       this.setState({ ticketsLoaded: true });
     });
   }
@@ -83,11 +83,11 @@ export default class App extends React.Component {
 
   onFiltersChange(checked, filter) {
     if (checked) {
-      const newFilter = [ ...this.state.filterBy, Number(filter) ];
+      const newFilter = [...this.state.filterBy, Number(filter)];
       this.setState({ filterBy: newFilter });
     } else {
       const indexOf = this.state.filterBy.indexOf(Number(filter));
-      const newFilter = [ ...this.state.filterBy ];
+      const newFilter = [...this.state.filterBy];
       newFilter.splice(indexOf, 1);
       this.setState({ filterBy: newFilter });
     }
@@ -107,9 +107,11 @@ export default class App extends React.Component {
             selected={this.state.selectedCurrency}
             onChange={this.onCurrencyChange}
           />
-          <Filters filters={this.filters} 
+          <Filters
+            filters={this.filters}
             selected={this.state.filterBy}
-            onChange={this.onFiltersChange}/>
+            onChange={this.onFiltersChange}
+          />
         </Aside>
         <Main>
           <TicketsContainer

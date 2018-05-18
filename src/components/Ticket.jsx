@@ -72,7 +72,7 @@ const TravelSide = styled.div`
 `;
 const TravelInfo = styled.div`
   padding: 4px;
-  
+
   &:first-child {
     text-align: left;
   }

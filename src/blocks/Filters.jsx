@@ -29,7 +29,8 @@ const FilterItem = styled.div`
 
 export default class Filters extends React.Component {
   onChange(e) {
-    if (this.props.onChange) this.props.onChange(e.target.checked, e.target.value);
+    if (this.props.onChange)
+      this.props.onChange(e.target.checked, e.target.value);
   }
 
   render() {
