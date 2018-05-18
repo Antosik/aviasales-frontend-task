@@ -11,8 +11,11 @@ const TicketsWrapper = styled.div`
 export default function TicketsContainer({
   currency,
   loaded = false,
-  tickets = []
+  tickets = [],
+  filter = []
 }) {
+  if (filter.length)
+    tickets = tickets.filter(ticket => filter.indexOf(ticket.stops) !== -1);
   return (
     <TicketsWrapper>
       {!loaded ? (

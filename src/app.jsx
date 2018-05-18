@@ -1,13 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 
-import Filters from "./components/Filters";
 import Logo from "./components/Logo";
 
 import Header from "./blocks/Header";
 import Aside from "./blocks/Aside";
 import Main from "./blocks/Main";
 import Currency from "./blocks/Currency";
+import Filters from "./blocks/Filters"; 
 import TicketsContainer from "./blocks/TicketsContainer";
 
 const AppContainer = styled.div`
@@ -28,24 +28,28 @@ export default class App extends React.Component {
       { name: "EUR", ratio: 73.83, sign: "€" }
     ];
     this.tickets = [];
+    this.filters = [];
 
     this.state = {
       selectedCurrency: "RUB",
+      filterBy: [],
       currenciesUpdated: false,
       ticketsLoaded: false
     };
     this.onCurrencyChange = this.onCurrencyChange.bind(this);
+    this.onFiltersChange = this.onFiltersChange.bind(this);
   }
 
   componentDidMount() {
     this.loadCurrencyRatio().then(updatedCurrencies => {
       this.currencies = updatedCurrencies;
-      this.setState({ ...this.state, currenciesUpdated: true });
+      this.setState({ currenciesUpdated: true });
     });
 
     this.loadTickets().then(tickets => {
       this.tickets = tickets;
-      this.setState({ ...this.state, ticketsLoaded: true });
+      this.filters = [ ...new Set(tickets.map(ticket => ticket.stops)) ].sort();
+      this.setState({ ticketsLoaded: true });
     });
   }
 
@@ -73,6 +77,18 @@ export default class App extends React.Component {
     this.setState({ selectedCurrency: currency });
   }
 
+  onFiltersChange(checked, filter) {
+    if (checked) {
+      const newFilter = [ ...this.state.filterBy, Number(filter) ];
+      this.setState({ filterBy: newFilter });
+    } else {
+      const indexOf = this.state.filterBy.indexOf(Number(filter));
+      const newFilter = [ ...this.state.filterBy ];
+      newFilter.splice(indexOf, 1);
+      this.setState({ filterBy: newFilter });
+    }
+  }
+
   render() {
     return (
       <AppContainer>
@@ -87,13 +103,16 @@ export default class App extends React.Component {
             selected={this.state.selectedCurrency}
             onChange={this.onCurrencyChange}
           />
-          <Filters />
+          <Filters filters={this.filters} 
+            selected={this.state.filterBy}
+            onChange={this.onFiltersChange}/>
         </Aside>
         <Main>
           <TicketsContainer
             currency={this.currencies.find(
               el => el.name === this.state.selectedCurrency
             )}
+            filter={this.state.filterBy}
             tickets={this.tickets}
             loaded={this.state.ticketsLoaded}
           />
