@@ -52,9 +52,9 @@ const CurrencyButtonContainer = styled.label`
   }
 `;
 
-export default ({ name, children }) => (
+export default ({ name, children, checked, onChange, value }) => (
   <CurrencyButtonContainer>
-    <CurrencyButtonInput name={name} />
+    <CurrencyButtonInput name={name} checked={checked} onChange={onChange} value={value} />
     <CurrencyButtonText>{children}</CurrencyButtonText>
   </CurrencyButtonContainer>
 );
