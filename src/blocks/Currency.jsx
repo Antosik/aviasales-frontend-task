@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import CurrencyButton from "./CurrencyButton"; 
+import CurrencyButton from "../components/CurrencyButton";
 
 const CurrencyContainer = styled.div`
   color: #4a494a;

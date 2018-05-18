@@ -1,13 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 
-import Currency from "./components/Currency";
 import Filters from "./components/Filters";
 import Logo from "./components/Logo";
 
 import Header from "./blocks/Header";
 import Aside from "./blocks/Aside";
 import Main from "./blocks/Main";
+import Currency from "./blocks/Currency";
 import TicketsContainer from "./blocks/TicketsContainer";
 
 const AppContainer = styled.div`
@@ -22,33 +22,51 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { 
+    this.currencies = [
+      { name: "RUB", ratio: 1, sign: "₽" },
+      { name: "USD", ratio: 62.32, sign: "$" },
+      { name: "EUR", ratio: 73.83, sign: "€" }
+    ];
+    this.tickets = [];
+
+    this.state = {
       selectedCurrency: "RUB",
-      currencies: [
-        { name: "RUB", ratio: 1, sign: "₽" },
-        { name: "USD", ratio: 62.32, sign: "$" },
-        { name: "EUR", ratio: 73.83, sign: "€" }
-      ]
+      currenciesUpdated: false,
+      ticketsLoaded: false
     };
     this.onCurrencyChange = this.onCurrencyChange.bind(this);
   }
 
-  componentDidMount() {   
-    this.loadCurrencyRatio()
-      .then(updatedCurrencies => this.setState({ ...this.state, currencies: updatedCurrencies }))
+  componentDidMount() {
+    this.loadCurrencyRatio().then(updatedCurrencies => {
+      this.currencies = updatedCurrencies;
+      this.setState({ ...this.state, currenciesUpdated: true });
+    });
+
+    this.loadTickets().then(tickets => {
+      this.tickets = tickets;
+      this.setState({ ...this.state, ticketsLoaded: true });
+    });
+  }
+
+  loadTickets() {
+    return fetch(App.ticketsSource)
+      .then(response => response.json())
+      .then(response => response.tickets);
   }
 
   loadCurrencyRatio() {
-    const self = this;
-
     return fetch("https://www.cbr-xml-daily.ru/daily_json.js")
       .then(response => response.json())
       .then(response => {
-        return self.state.currencies.map(currency => {
-          var newRatio = response.Valute[currency.name] && response.Valute[currency.name].Value || currency.ratio;
+        return this.currencies.map(currency => {
+          var newRatio =
+            (response.Valute[currency.name] &&
+              response.Valute[currency.name].Value) ||
+            currency.ratio;
           return { ...currency, ratio: newRatio };
-        })
-      })
+        });
+      });
   }
 
   onCurrencyChange(currency) {
@@ -65,7 +83,7 @@ export default class App extends React.Component {
         </Header>
         <Aside>
           <Currency
-            currencies={this.state.currencies}
+            currencies={this.currencies}
             selected={this.state.selectedCurrency}
             onChange={this.onCurrencyChange}
           />
@@ -73,10 +91,17 @@ export default class App extends React.Component {
         </Aside>
         <Main>
           <TicketsContainer
-            currency={this.state.currencies.find(el => el.name === this.state.selectedCurrency)}
+            currency={this.currencies.find(
+              el => el.name === this.state.selectedCurrency
+            )}
+            tickets={this.tickets}
+            loaded={this.state.ticketsLoaded}
           />
         </Main>
       </AppContainer>
     );
   }
 }
+
+App.ticketsSource =
+  "https://raw.githubusercontent.com/KosyanMedia/test-tasks/master/aviasales/tickets.json";
