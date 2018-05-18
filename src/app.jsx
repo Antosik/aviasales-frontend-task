@@ -83,7 +83,13 @@ export default class App extends React.Component {
     this.setState({ selectedCurrency: currency });
   }
 
-  onFiltersChange(checked, filter) {
+  onFiltersChange(checked, filter, all =false) {
+    if (all) {
+      const newFilter = [ Number(filter)];
+      this.setState({ filterBy: newFilter });
+      return;
+    }
+
     if (checked) {
       const newFilter = [...this.state.filterBy, Number(filter)];
       this.setState({ filterBy: newFilter });

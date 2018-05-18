@@ -16,21 +16,39 @@ const FiltersList = styled.div`
   margin-top: 8px;
 `;
 
+const FilterOnlyThis = styled.button.attrs({
+  type: "button"
+})`
+  display: none;
+  text-transform: uppercase;
+  font-size: 11px;
+  color: #2196F3;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  padding: 2px;
+`;
+
 const FilterItem = styled.div`
   display: block;
   margin-bottom: 4px;
   transition: 0.2s background;
   padding: 8px;
+  display: flex;
 
   &:hover {
     background: #f1fcff;
   }
+
+  &:hover ${FilterOnlyThis} {
+    display: block;
+  }
 `;
 
 export default class Filters extends React.Component {
-  onChange(e) {
+  onChange(checked, value, all = false) {
     if (this.props.onChange)
-      this.props.onChange(e.target.checked, e.target.value);
+      this.props.onChange(checked, value, all);
   }
 
   render() {
@@ -45,10 +63,12 @@ export default class Filters extends React.Component {
                 key={`stops${el}`}
                 value={el}
                 checked={this.props.selected.indexOf(el) !== -1}
-                onChange={this.onChange.bind(this)}
+                onChange={e => this.onChange(e.target.checked, e.target.value)}
               >
                 {formatStops(el)}
               </FilterCheckbox>
+              <FilterOnlyThis
+                onClick={e => this.onChange(true, el, true)}>Только</FilterOnlyThis>
             </FilterItem>
           ))}
         </FiltersList>
