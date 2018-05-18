@@ -34,7 +34,6 @@ const CurrencyButtonInput = styled.input.attrs({
   }
 
   &:checked:active + ${CurrencyButtonText} {
-
   }
 `;
 
@@ -52,9 +51,22 @@ const CurrencyButtonContainer = styled.label`
   }
 `;
 
-export default ({ name, children, checked, onChange, value }) => (
-  <CurrencyButtonContainer>
-    <CurrencyButtonInput name={name} checked={checked} onChange={onChange} value={value} />
-    <CurrencyButtonText>{children}</CurrencyButtonText>
-  </CurrencyButtonContainer>
-);
+export default function CurrencyButton({
+  name,
+  children,
+  checked,
+  onChange,
+  value
+}) {
+  return (
+    <CurrencyButtonContainer>
+      <CurrencyButtonInput
+        name={name}
+        checked={checked}
+        onChange={onChange}
+        value={value}
+      />
+      <CurrencyButtonText>{children}</CurrencyButtonText>
+    </CurrencyButtonContainer>
+  );
+}
