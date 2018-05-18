@@ -107,6 +107,27 @@ const TravelStops = styled.div`
   @media (min-width: 1024px) {
     position: relative;
     width: auto;
+    flex: 1 0 auto;
+  }
+
+  &:before {
+    content: "";
+    border-bottom: 1px solid #d2d5d6;
+    position: absolute;
+    top: 20px;
+    width: 50%;
+    left: 25%;
+  }
+
+  &:after {
+    content: "✈";
+    color: #d2d5d6;
+    font-size: 16px;
+    position: absolute;
+    top: 9px;
+    width: 50%;
+    left: 25%;
+    text-align: right;
   }
 `;
 
