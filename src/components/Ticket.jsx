@@ -5,17 +5,25 @@ const TicketContainer = styled.div`
   box-shadow: 0px 1px 4px rgba(91, 137, 163, 0.25);
   background: #fff;
   display: flex;
-  height: 160px;
   margin-bottom: 20px;
+  flex-direction: column;
+
+  @media (min-width: 1024px) {
+    flex-direction: row;
+  }
 `;
 
 const BuySide = styled.div`
-  flex: 0 0 200px;
+  flex: 1 0 auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   border-right: 1px solid #eceff1;
+
+  @media (min-width: 1024px) {
+    flex: 0 0 200px;
+  }
 `;
 const CarrierLogo = styled.img`
   width: 120px;
@@ -27,14 +35,20 @@ const BuyButton = styled.a`
   width: 160px;
   background: #ff6c00;
   color: #ffffff;
-  font-size: 16px;
+  font-size: 14px;
   box-shadow: 0px 2px 1px rgba(0, 0, 0, 0.1);
   box-shadow: 0px 1px 0px #d54d08;
   text-align: center;
   border-radius: 4px;
-  padding: 6px 28px;
+  padding: 8px;
   text-decoration: none;
-  height: 56px;  
+  height: auto;  
+
+  @media (min-width: 1024px) {
+    padding: 6px 28px;
+    height: 56px;  
+    font-size: 16px;
+  }
 
   &:hover {
     background: #ff8123;
@@ -48,7 +62,13 @@ const TravelSide = styled.div`
   justify-content: space-between;
   position: relative;
   flex: 1 0 auto;
-  padding: 24px;
+  padding: 4px;
+  margin-top: 8px;
+
+  @media (min-width: 1024px) {
+    padding: 24px;
+    margin-top: 0;
+  }
 `;
 const TravelInfo = styled.div`
   padding: 4px;
@@ -62,7 +82,11 @@ const TravelInfo = styled.div`
 `;
 const TravelTime = styled.div`
   color: #494949;
-  font-size: 32px;
+  font-size: 20px;
+
+  @media (min-width: 1024px) {
+    font-size: 32px;
+  }
 `;
 const TravelDate = styled.div`
   color: #8a9496;
@@ -76,6 +100,14 @@ const TravelStops = styled.div`
   color: #8a9496;
   font-size: 10px;
   text-transform: uppercase;
+  position: absolute;
+  text-align: center;
+  width: 100%;
+
+  @media (min-width: 1024px) {
+    position: relative;
+    width: auto;
+  }
 `;
 
 function formatDate(dateString) {

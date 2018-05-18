@@ -11,11 +11,15 @@ import Filters from "./blocks/Filters";
 import TicketsContainer from "./blocks/TicketsContainer";
 
 const AppContainer = styled.div`
-    width: calc(100% - 40px);
+    width: 100%;
     max-width: 1200px;
     margin: 0 auto;
     display: flex;
     flex-wrap: wrap;
+
+    @media (min-width: 1024px) {
+      width: calc(100% - 40px);
+    }
 }`;
 
 export default class App extends React.Component {

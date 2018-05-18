@@ -41,7 +41,7 @@ export default class Filters extends React.Component {
             <FilterItem>
               <FilterCheckbox
                 name="stops"
-                key={el}
+                key={`stops${el}`}
                 value={el}
                 checked={this.props.selected.indexOf(el) !== -1}
                 onChange={this.onChange.bind(this)}
